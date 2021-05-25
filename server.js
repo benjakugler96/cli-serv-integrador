@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 // Connect to mongo
-// connectDb();
+connectDb();
 
 // Error handler
 app.use(errorHandler);
