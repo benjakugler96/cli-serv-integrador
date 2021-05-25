@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const errorHandler = require('./middlewares/error');
 const connectDb = require('./config/db');
@@ -13,13 +14,39 @@ app.use(express.json());
 app.use(cors());
 
 // Connect to mongo
-connectDb();
+// connectDb();
 
 // Error handler
 app.use(errorHandler);
 
 // Mount routes
+app.use('/api/auth', require('./routes/auth'));
 app.use('/api/reports', require('./routes/reports'));
+
+// To get acces to req.cookie
+app.use(cookieParser());
+
+// Swagger
+// TODO: move this to separate file
+const swaggerUI = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const options = {
+	definition: {
+		openapi: '3.0.0',
+		info: {
+			title: 'Ministerio Del Interior',
+			version: '1.0.0',
+			description: 'Grupo 1 - Cliente Servidor 2021 TPI',
+		},
+		servers: [
+			{ url: 'http://localhost:4000' },
+			{ url: ' https://cli-serv-grupo1.herokuapp.com' },
+		],
+	},
+	apis: ['./controllers/*.js'],
+};
+const specs = swaggerJsDoc(options);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 const PORT = process.env.PORT || 4000;
 

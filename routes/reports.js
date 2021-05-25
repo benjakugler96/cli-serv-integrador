@@ -7,7 +7,9 @@ const {
 	createReport,
 } = require('../controllers/reports');
 
-router.route('/').get(getReports).post(createReport);
-router.route('/:id').get(getReportById);
+const { protect } = require('../middlewares/auth');
+
+router.route('/').get(protect, getReports).post(protect, createReport);
+router.route('/:id').get(protect, getReportById);
 
 module.exports = router;
