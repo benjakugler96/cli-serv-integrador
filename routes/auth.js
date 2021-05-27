@@ -10,10 +10,10 @@ const {
 	logout,
 } = require('../controllers/auth');
 
-const { protect } = require('../middlewares/auth');
+const { protect, authorize } = require('../middlewares/auth');
 
 router.route('/login').post(login);
-router.route('/register').post(register);
+router.route('/register').post(authorize('admin'), register);
 router.route('/forgotpassword').post(forgotPassword);
 router.route('/logout').get(logout);
 router.route('/me').get(protect, getMe);

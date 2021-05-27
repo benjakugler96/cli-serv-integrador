@@ -71,12 +71,13 @@ const User = require('../models/User');
  *         description: Invalid Email or Password.
  */
 exports.register = asyncHandler(async (req, res, next) => {
-	const { name, email, password } = req.body;
+	const { name, email, password, role } = req.body;
 
 	const user = await User.create({
 		name,
 		email,
 		password,
+		role,
 	});
 
 	sendTokenResponse(user, 200, res);

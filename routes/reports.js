@@ -7,9 +7,12 @@ const {
 	createReport,
 } = require('../controllers/reports');
 
-const { protect } = require('../middlewares/auth');
+const { protect, authorize } = require('../middlewares/auth');
 
-router.route('/').get(protect, getReports).post(protect, createReport);
+router
+	.route('/')
+	.get(protect, authorize('admin', 'user'), getReports)
+	.post(protect, authorize('admin', 'user'), createReport);
 router.route('/:id').get(protect, getReportById);
 
 module.exports = router;
