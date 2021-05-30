@@ -57,27 +57,6 @@ const asyncHandler = require('../middlewares/asyncHandler');
 
 /**
  * @swagger
- * components:
- *  schemas:
- *   Business:
- *     type: object
- *     properties:
- *       _id:
- *         type: string
- *         description: Auto-generated if from mongodb
- *       cuit:
- *         type: string
- *         description: Business CUIT.
- *       businessName:
- *         type: string
- *         description: Name of the business.
- *       report:
- *         type: object
- *         description: Last report filled by this Business.
- */
-
-/**
- * @swagger
  * tags:
  *   name: Report
  *   description: The Reports managing API

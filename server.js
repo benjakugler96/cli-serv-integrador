@@ -22,6 +22,7 @@ app.use(errorHandler);
 // Mount routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/reports', require('./routes/reports'));
+app.use('/api/business', require('./routes/business'));
 
 // To get acces to req.cookie
 app.use(cookieParser());

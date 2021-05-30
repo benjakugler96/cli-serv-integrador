@@ -12,8 +12,9 @@ const BusinessSchema = new Schema({
 		require: true,
 		trim: true,
 	},
-	report: {
+	reports: {
 		type: [{ type: Schema.Types.ObjectId, ref: 'Report' }],
+		default: [],
 	},
 	user: {
 		type: Schema.Types.ObjectId,
