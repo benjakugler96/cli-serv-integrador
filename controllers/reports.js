@@ -108,11 +108,7 @@ const asyncHandler = require('../middlewares/asyncHandler');
  *         description: Unauthorized user.
  */
 exports.getReports = asyncHandler(async (req, res, next) => {
-	const reports = await Report.find({});
-	res.status(200).json({
-		success: true,
-		data: reports,
-	});
+	res.status(200).json(res.advancedResults);
 });
 
 /**
