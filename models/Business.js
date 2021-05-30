@@ -13,8 +13,11 @@ const BusinessSchema = new Schema({
 		trim: true,
 	},
 	report: {
+		type: [{ type: Schema.Types.ObjectId, ref: 'Report' }],
+	},
+	user: {
 		type: Schema.Types.ObjectId,
-		ref: 'Report',
+		ref: 'User',
 	},
 });
 

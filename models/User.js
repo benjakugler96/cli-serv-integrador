@@ -34,6 +34,10 @@ const UserSchema = new Schema({
 		enum: ['user', 'admin', 'gustavo'],
 		default: 'user',
 	},
+	business: {
+		type: Schema.Types.ObjectId,
+		ref: 'Business',
+	},
 });
 
 // Encrypt password
