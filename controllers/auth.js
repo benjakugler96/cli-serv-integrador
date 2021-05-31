@@ -96,10 +96,10 @@ exports.register = asyncHandler(async (req, res, next) => {
  *         properties:
  *           email:
  *             type: string
- *             example: benjamin.kugler1996@gmail.com
+ *             default: benjamin.kugler1996@gmail.com
  *           password:
  *             type: string
- *             example: 123456
+ *             default: 123456
  *     responses:
  *       200:
  *         description: User authenticated.

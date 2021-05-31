@@ -14,8 +14,15 @@ const advancedResults = require('../middlewares/advancedResults');
 
 router
 	.route('/')
-	.get(protect, authorize('admin', 'user'), advancedResults(Report), getReports)
-	.post(protect, authorize('admin', 'user'), createReport);
-router.route('/:id').get(protect, getReportById);
+	.get(
+		protect,
+		authorize('secretaria', 'user'),
+		advancedResults(Report),
+		getReports
+	)
+	.post(protect, authorize('user'), createReport);
+router
+	.route('/:id')
+	.get(protect, authorize('secretaria', 'user'), getReportById);
 
 module.exports = router;

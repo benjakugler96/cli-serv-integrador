@@ -1,6 +1,8 @@
 const Report = require('../models/Report');
+const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middlewares/asyncHandler');
+const Business = require('../models/Business');
 
 /**
  * @swagger
@@ -147,7 +149,6 @@ exports.getReportById = asyncHandler(async (req, res, next) => {
  *           business:
  *             type: string
  *             description: Business ID
- *             example: Business Name
  *           productsList:
  *             type: array
  *             description: List of products filled in the report.
@@ -188,9 +189,38 @@ exports.getReportById = asyncHandler(async (req, res, next) => {
  *         description: Unauthorized user.
  */
 exports.createReport = asyncHandler(async (req, res, next) => {
-	// TODO: check if there is already a report with some unique data.
+	// Get business id from body. if not, check in DB.
+	let { business } = req.body || {};
+	if (!business) {
+		const user = await User.findById(req.user._id);
+		if (!user.business) {
+			return next(new ErrorResponse(`Add a Business first.`, 404));
+		}
+		business = user.business;
+	}
 
-	const newReport = await Report.create(req.body);
+	// Check if there is a report for same period
+	const { period: { year, month } = {} } = req.body || {};
+	const report = await Report.find({ period: { year, month } });
+	if (report.length) {
+		return next(
+			new ErrorResponse(`There is already a report for: ${month}/${year}.`, 404)
+		);
+	}
+
+	// Create Report
+	const newReport = await Report.create({
+		...req.body,
+		business,
+		dateLimit: 10,
+		dateAdded: Date.now(),
+	});
+
+	// Add report to Business reports array
+	await Business.findByIdAndUpdate(business, {
+		$push: { reports: newReport },
+	});
+
 	res.status(201).json({
 		success: true,
 		data: newReport,

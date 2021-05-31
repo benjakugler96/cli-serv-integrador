@@ -8,8 +8,8 @@ const ReportSchema = new Schema({
 	productsList: {
 		type: [
 			{
-				type: Schema.Types.ObjectId,
-				ref: 'Product',
+				// type: Schema.Types.ObjectId,
+				// ref: 'Product',
 			},
 		],
 	},

@@ -1,4 +1,5 @@
 const Business = require('../models/Business');
+const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middlewares/asyncHandler');
 
@@ -116,19 +117,10 @@ exports.getBusinessById = asyncHandler(async (req, res, next) => {
  *             type: string
  *             description: Business CUIT
  *             example: 402849029129
- *           reports:
- *             type: array
- *             description: List of all reports realted to business.
- *             items:
- *               $ref: '#components/schemas/Report'
  *           businessName:
  *             type: string
  *             description: Date added.
  *             example: EDUCANDO S.A.
- *           user:
- *             type: object
- *             description: User.
- *             $ref: '#components/schemas/User'
  *     responses:
  *       200:
  *         description: Create a new business.
@@ -147,7 +139,6 @@ exports.getBusinessById = asyncHandler(async (req, res, next) => {
  *         description: Unauthorized user.
  */
 exports.createBusiness = asyncHandler(async (req, res, next) => {
-	// TODO: check if there is already a business with some unique data.
 	const { _id } = req.user || {};
 	if (!_id) {
 		return next(new ErrorResponse(`No user in request`, 404));
@@ -157,6 +148,14 @@ exports.createBusiness = asyncHandler(async (req, res, next) => {
 		user: _id,
 		reports: [],
 	});
+
+	// 	todo: checkear si ya existe una empresa ese usuario
+
+	// Add business to user document
+	await User.findByIdAndUpdate(_id, {
+		business: newBusiness._id,
+	});
+
 	res.status(201).json({
 		success: true,
 		data: newBusiness,

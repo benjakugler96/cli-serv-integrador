@@ -16,13 +16,13 @@ app.use(cors());
 // Connect to mongo
 connectDb();
 
-// Error handler
-app.use(errorHandler);
-
 // Mount routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/reports', require('./routes/reports'));
 app.use('/api/business', require('./routes/business'));
+
+// Error handler
+app.use(errorHandler);
 
 // To get acces to req.cookie
 app.use(cookieParser());

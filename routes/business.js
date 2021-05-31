@@ -7,12 +7,20 @@ const {
 	getBusinessById,
 } = require('../controllers/business');
 
-// const Report = require('../models/Report');
+const Business = require('../models/Business');
 
 const { protect, authorize } = require('../middlewares/auth');
 const advancedResults = require('../middlewares/advancedResults');
 
-router.route('/').get(getAllBusiness).post(protect, createBusiness);
-router.route('/:id').get(getBusinessById);
+router
+	.route('/')
+	.get(
+		protect,
+		authorize('admin', 'secretaria'),
+		advancedResults(Business, 'user'),
+		getAllBusiness
+	)
+	.post(protect, authorize('user'), createBusiness);
+router.route('/:id').get(authorize('user', 'secretaria'), getBusinessById);
 
 module.exports = router;
