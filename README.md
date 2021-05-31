@@ -8,7 +8,7 @@ cd cli-serv-integrador
 npm i
 ```
 
-## Correr el proyecto
+## Correr el proyecto
 
 ```sh
 npm run dev
