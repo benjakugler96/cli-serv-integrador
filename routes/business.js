@@ -21,6 +21,7 @@ router
 		getAllBusiness
 	)
 	.post(protect, authorize('user'), createBusiness);
-router.route('/:id').get(authorize('user', 'secretaria'), getBusinessById);
+// router.route('/:id').get(authorize('user', 'secretaria'), getBusinessById);
+router.route('/:id').get(getBusinessById);
 
 module.exports = router;
