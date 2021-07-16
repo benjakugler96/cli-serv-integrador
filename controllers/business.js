@@ -89,7 +89,6 @@ exports.getAllBusiness = asyncHandler(async (req, res, next) => {
  *         description: Unauthorized user.
  */
 exports.getBusinessById = asyncHandler(async (req, res, next) => {
-	console.log('###############');
 	const business = await Business.findById(req.params.id);
 
 	if (!business) {

@@ -17,7 +17,7 @@ router
 	.get(
 		protect,
 		authorize('admin', 'secretaria'),
-		advancedResults(Business, 'user'),
+		advancedResults(Business, 'user, reports'),
 		getAllBusiness
 	)
 	.post(protect, authorize('user'), createBusiness);
